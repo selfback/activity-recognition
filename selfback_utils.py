@@ -8,7 +8,6 @@ from scipy import fftpack
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn import metrics
-from dtw import dtw
 import math
 
 feats = ['sum_x', 'sum_y', 'sum_z', 'sum_m', 'mean_x', 'mean_y', 'mean_z', 'mean_m', 'sd_x', 'sd_y', 'sd_z', 'sd_m', 'iqr_x', 'iqr_y', 'iqr_z', 'iqr_m', 'p10_x', 'p25_x', 'p50_x', 'p75_x', 'p90_x', 'p10_y', 'p25_y', 'p50_y', 'p75_y', 'p90_y', 'p10_z', 'p25_z', 'p50_z', 'p75_z', 'p90_z', 'p10_m', 'p25_m', 'p50_m', 'p75_m', 'p90_m', 'p2p_x', 'p2p_y', 'p2p_z', 'p2p_m', 'pw_x', 'pw_y', 'pw_z', 'pw_m', 'lpw_x', 'lpw_y', 'lpw_z', 'lpw_m', 'acorr_x', 'acorr_y', 'acorr_z', 'acorr_m', 'kurt_x', 'kurt_y', 'kurt_z', 'kurt_m', 'skw_x', 'skw_y', 'skw_z', 'skw_m', 'corr_xy', 'corr_xz', 'corr_yz', 'mcross_x', 'mcross_y', 'mcross_z', 'mcross_m', 'energy_xyz', 'rsm_x', 'rsm_y', 'rsm_z', 'rsm_m', 'max_x', 'max_y', 'max_z', 'max_m', 'min_x', 'min_y', 'min_z', 'min_m', 'mad_x', 'mad_y', 'mad_z', 'mad_m']

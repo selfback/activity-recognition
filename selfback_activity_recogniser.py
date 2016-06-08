@@ -34,7 +34,7 @@ class ActivityRecogniser:
     classifier = None
     scaler = None
 
-    def __init__(self, modelpath=None):
+    def __init__(self, modelpath='model'):
         if modelpath is not None:
             self.load_models(modelpath)
     
@@ -68,7 +68,7 @@ class ActivityRecogniser:
         #X_train_norm = pca.fit_transform(X_train_norm)         
         
         ##########  Change Data Labels Granularity ##########################  
-        y_train = su.relabel(y_train, label_map) 
+        y_train = su.relabel(y_train) 
                     
         #########  Train Classifier  #########################################
         clf = SVC()            
@@ -149,32 +149,16 @@ class InitError(Exception):
     
 if __name__ == '__main__':
     
-    data_path = 'C:/Datasets/Activity/RGU/v2/Labelled_20/'
-    person_data = su.read_train_data(data_path)
+    data_path = 'test_data/'
+    person_data = su.read_train_data(data_path) 
     
-    sendentary = ['standing', 'sitting', 'lying']
-    label_map = {'standing': 'standing', 'sitting':'sedentary', 'lying':'sedentary', 'jogging':'running', 'walk_slow':'walking', 'walk_mod':'walking', 'walk_fast':'walking', 'upstairs':'stairs', 'downstairs': 'stairs'} 
-     
-    
-    exp_name = 'SVM_Flat_4class_Tw10_dct+mag_20data.txt'
-    
-    outfile = open('C:/results/'+exp_name, 'w')    
-   
-    acc_scores = []
-    f1_scores = []
-    tw_true_classes = []
-    tw_pred_classes = []
-    
-    instance_ids = person_data.keys()
-    N = len(instance_ids)
-    instance_ids.extend(instance_ids)  
+    instance_ids = person_data.keys()   
     
     ar = ActivityRecogniser('models')
     #ar = ActivityRecogniser()
     for ind in range(1):
         test_case = instance_ids[ind]        
-        print 'Test case: '+test_case
-        #test_case = 'person101'
+        #print 'Test case: '+test_case
         train_data = [value for key, value in person_data.items() if key not in [test_case]]
         test_data = person_data[test_case]        
         
@@ -183,7 +167,7 @@ if __name__ == '__main__':
         
         ############  Classify Test Set  ####################################
         for activity in test_data:  
-            print '#################    '+activity+'    ###################'
+            #print '#################    '+activity+'    ###################'
             df = test_data[activity]      
             predictions = ar.predict_activities(df)
             print predictions
